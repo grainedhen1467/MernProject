@@ -6,7 +6,12 @@ import DashLayout from './components/DashLayout';
 import Welcome from './features/auth/Welcome';
 import NotesList from './features/notes/NotesList';
 import UsersList from './features/users/UsersList';
-
+import EditUser from "./features/users/EditUser";
+import NewUserForm from "./features/users/NewUserForm";
+import EditNote from "./features/notes/EditNote";
+import NewNote from "./features/notes/NewNote";
+import Prefetch from './features/auth/Prefetch';
+import NewNoteForm from "./features/notes/NewNoteForm";
 
 const App = () => {
 
@@ -19,26 +24,34 @@ const App = () => {
                 { path: "login", element: <Login /> },
                 { 
                     path: "dash",
-                    element: <DashLayout />,
+                    element: <Prefetch />,
                     children: [
-                        { index: true, element: <Welcome /> },
-                        { 
-                            path: "notes",
-                            children: [
-                                { index: true, element: <NotesList /> }
-                            ]
-                        },
                         {
-                            path: "users",
+                            element: <DashLayout />,
                             children: [
-                                { index: true, element: <UsersList /> }
+                                { index: true, element: <Welcome /> },
+                                {
+                                    path: "users",
+                                    children: [
+                                        { index: true, element: <UsersList /> },
+                                        { path: ":id", element: <EditUser /> },
+                                        { path: "new", element: <NewUserForm /> }
+                                    ]
+                                },
+                                { 
+                                    path: "notes",
+                                    children: [
+                                        { index: true, element: <NotesList /> },
+                                        { path: ":id", element: <EditNote /> },
+                                        { path: "new", element: <NewNote /> }
+                                    ]
+                                }
                             ]
                         }
-                    ] 
-                }, 
+                    ]
+                }
             ]
         }
-       
     ]);
 
     return (
