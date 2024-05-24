@@ -1,9 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
-    return (
-        <Outlet />
-    );
-};
-
-export default Layout;
+    console.log("layout component-line-4");
+    return <Outlet />
+}
+export default Layout

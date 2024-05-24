@@ -30,7 +30,7 @@ const PersistLogin = () => {
                 console.log('verifying refresh token')
                 try {
                     //const response = 
-                    await refresh()
+                    await refresh().unwrap()
                     //const { accessToken } = response.data
                     setTrueSuccess(true)
                 }
@@ -45,7 +45,7 @@ const PersistLogin = () => {
         return () => effectRan.current = true
 
         // eslint-disable-next-line
-    }, [])
+    }, [token, persist, refresh])
 
 
     let content
@@ -59,7 +59,7 @@ const PersistLogin = () => {
         console.log('error')
         content = (
             <p className='errmsg'>
-                {error.data?.message}
+                {`${error?.data?.message} - `}
                 <Link to="/login">Please login again</Link>.
             </p>
         )
@@ -71,7 +71,11 @@ const PersistLogin = () => {
         console.log(isUninitialized)
         content = <Outlet />
     }
-
-    return content
+    console.log("PersistLogin component-line-74")
+    return (
+        <>
+            {content}
+        </>
+    )
 }
 export default PersistLogin

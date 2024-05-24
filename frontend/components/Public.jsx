@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const Public = () => {
     const content = (
@@ -22,7 +22,8 @@ const Public = () => {
             </footer>
         </section>
 
-    );
-    return content;
+    )
+    console.log("Public component-line-26")
+    return content
 }
-export default Public;
+export default Public

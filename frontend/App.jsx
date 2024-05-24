@@ -12,6 +12,8 @@ import EditNote from "./features/notes/EditNote";
 import NewNote from "./features/notes/NewNote";
 import Prefetch from './features/auth/Prefetch';
 import PersistLogin from "./features/auth/PersistLogin";
+import RequireAuth from './features/auth/RequireAuth';
+import { ROLES } from './config/roles';
 // import NewNoteForm from "./features/notes/NewNoteForm";
 
 const App = () => {
@@ -20,14 +22,16 @@ const App = () => {
         {
             path: "/",
             element: <Layout />,
+            // public routes 
             children: [
                 { index: true, element: <Public /> },
                 { path: "login", element: <Login /> },
+                //Protected Routes
                 { 
                     path: "dash",
                     element: <PersistLogin />,
                     children: [
-                        {
+                        {   
                             element: <Prefetch />,
                             children: [
                                 {
@@ -56,7 +60,7 @@ const App = () => {
                             
                         }
                     ]
-                }
+                }//End of Protected Routes
             ]
         }
     ]);
