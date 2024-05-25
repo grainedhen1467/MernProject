@@ -14,10 +14,11 @@ import Prefetch from './features/auth/Prefetch';
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from './features/auth/RequireAuth';
 import { ROLES } from './config/roles';
-// import NewNoteForm from "./features/notes/NewNoteForm";
+import useTitle from './hooks/useTitle';
 
 const App = () => {
-
+    useTitle("Dan D. Repairs");
+    
     const routes = createBrowserRouter([
         {
             path: "/",
@@ -31,34 +32,43 @@ const App = () => {
                     path: "dash",
                     element: <PersistLogin />,
                     children: [
-                        {   
-                            element: <Prefetch />,
+                        { 
+                            element: <RequireAuth allowedRoles={[...Object.values(ROLES)]} />,
                             children: [
-                                {
-                                    element: <DashLayout />,
+                                {   
+                                    element: <Prefetch />,
                                     children: [
-                                        { index: true, element: <Welcome /> },
                                         {
-                                            path: "users",
+                                            element: <DashLayout />,
                                             children: [
-                                                { index: true, element: <UsersList /> },
-                                                { path: ":id", element: <EditUser /> },
-                                                { path: "new", element: <NewUserForm /> }
-                                            ]
-                                        },
-                                        { 
-                                            path: "notes",
-                                            children: [
-                                                { index: true, element: <NotesList /> },
-                                                { path: ":id", element: <EditNote /> },
-                                                { path: "new", element: <NewNote /> }
+                                                { index: true, element: <Welcome /> },
+                                                {
+                                                    element: <RequireAuth allowedRoles={[ROLES.Manager, ROLES.Admin]} />,
+                                                    children: [
+                                                        {
+                                                            path: "users",
+                                                            children: [
+                                                                { index: true, element: <UsersList /> },
+                                                                { path: ":id", element: <EditUser /> },
+                                                                { path: "new", element: <NewUserForm /> }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                { 
+                                                    path: "notes",
+                                                    children: [
+                                                        { index: true, element: <NotesList /> },
+                                                        { path: ":id", element: <EditNote /> },
+                                                        { path: "new", element: <NewNote /> }
+                                                    ]
+                                                }
                                             ]
                                         }
-                                    ]
+                                    ]   
                                 }
                             ]
-                            
-                        }
+                        },
                     ]
                 }//End of Protected Routes
             ]
